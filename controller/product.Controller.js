@@ -56,30 +56,21 @@ class Productcontroller{
             return res.status(500).json({message:e.message, success:false})
         }
     }
+    productViewSingle = async (req, res) => {
+        try {
 
-
- productViewSingle=async(req,res)=>{
-
- try{
-
-     const productInfo=await productModel.findOne({_id:req?.param?.id})
-     console.log(productInfo);
-
-     if(!productInfo){
-         return res.status(404).json({message:"product not found", success:true})
-     }
-     else{
-
-         return res.status(200).json({message: "product found", data:productInfo,success:true})
-     }
- 
- }catch(e){
-     console.log(e);
-     return res.status(500).json({message:"servor error", success:true})
- }
-
- }
-
+            // const id=req?.params?.id 
+          const productInfo = await productModel.findOne({_id:req?.params?.id});
+          console.log(productInfo);
+          if(!productInfo) return res.status(400).json({success:false,message:"Product Not Found"})
+          else return res
+            .status(200)
+            .json({ message: `products found`, data: productInfo, success: true });
+        } catch (e) {
+          console.log(e);
+          return res.status(400).json(e, { message: 'server error', success: false });
+        }
+      };
 
 
 productUpdate=async (req,res)=>{
